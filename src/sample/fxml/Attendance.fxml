@@ -4,15 +4,27 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #b5c3fd;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <Label layoutX="54.0" layoutY="68.0" text="Enter Student ID:" />
-      <TextField fx:id="attendanceTextfield" layoutX="170.0" layoutY="64.0" promptText="ID" />
+      <TextField fx:id="attendanceTextfield1" layoutX="170.0" layoutY="64.0" promptText="ID" />
       <CheckBox fx:id="present" layoutX="54.0" layoutY="123.0" mnemonicParsing="false" text="Present" />
       <CheckBox fx:id="absent" layoutX="196.0" layoutY="123.0" mnemonicParsing="false" text="Absent" />
       <Button fx:id="saveattendance" layoutX="129.0" layoutY="188.0" mnemonicParsing="false" onAction="#saveattendanceClick" style="-fx-background-color: #1ec3fd;" text="Save" />
+      <Label layoutX="435.0" layoutY="68.0" style="-fx-background-color: FFFFF;" text="Add Students" />
+      <Button fx:id="addForAttendance" layoutX="445.0" layoutY="107.0" mnemonicParsing="false" onAction="#addForAttendanceClick" style="-fx-background-color: #1ec3fd;" text="Add" />
+      <Button fx:id="backToHome" layoutX="550.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToHomeClick" prefHeight="14.0" prefWidth="36.0">
+         <graphic>
+            <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../img/home.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

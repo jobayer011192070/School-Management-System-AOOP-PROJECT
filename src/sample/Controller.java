@@ -19,19 +19,27 @@ public class Controller {
     @FXML
     Button registrationBtn;
     @FXML
-    Button Registrationbtn;
+    Button Registrationbtn,saveResultButton,resultBackButton;
     @FXML
-    Button resultBtn;
+    Button resultBtn,addForAttendance,addResultButton;
     @FXML
-    Button backToHome,attendanceBtn,saveattendance;
+    Button backToHome,attendanceDataSave,saveattendance,attendanceButton,attendanceBack;
     @FXML
     Button login, noticeButton, studentButton,studentSearch;
     @FXML
-    TextField fn,ln,id,cn,classBtn,studentID,pass,studentSearchTextField,attendanceTextfield;
+    Button searchReasultButton;
+    @FXML
+    TextField  resultIDType;
+
+    @FXML
+    TextField fn,ln,id,cn,classBtn,studentID,pass,studentSearchTextField,attendanceTextfield1,attendanceTextfield,AttendencePresent,AttendenceAbsent,AttendenceID;
+    @FXML
+    TextField idForResultTF,gradeForResultTF;
+
     @FXML
     CheckBox present,absent;
     @FXML
-    TextArea studentSearchTextArea;
+    TextArea studentSearchTextArea,showResultTextArea;
     private BufferedWriter writer;
     private BufferedReader reader;
     public Controller(){
@@ -78,7 +86,6 @@ public class Controller {
         id.setText("");
         cn.setText("");
         classBtn.setText("");
-//          writer.write("add\n");
         writer.write(msg);
         writer.newLine();
 
@@ -149,6 +156,7 @@ public class Controller {
         }
 
     }
+
     @FXML
     public void noticeclick() throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("fxml/Notice.fxml"));
@@ -175,10 +183,122 @@ public class Controller {
     }
     @FXML
     public void attendanceClick() throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("fxml/Home.fxml"));
-        Stage window = (Stage) attendanceBtn.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("fxml/Attendance.fxml"));
+        Stage window = (Stage) attendanceButton.getScene().getWindow();
         window.setScene(new Scene(root,600,575));
     }
+    @FXML
+    public void addForAttendanceClick() throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("fxml/AttendanceRecord.fxml"));
+        Stage window = (Stage) addForAttendance.getScene().getWindow();
+        window.setScene(new Scene(root,600,575));
+    }
+    @FXML
+    public void searchReasultClick(){
+        String resultID = resultIDType.getText();
+        resultIDType.setText("");
+        File file = new File("Result.txt");
+        class Result1 {
+            public String resultId,grade;
+
+            public Result1(String resultId, String grade) {
+                this.resultId = resultId;
+                this.grade = grade;
+            }
+        }
+
+        try
+        {
+
+            FileReader fr = new FileReader(file);
+            BufferedReader buf = new BufferedReader(fr);
+
+            Result1[] student = new Result1[500];
+            String r = buf.readLine();
+            int i=0;
+            String ab = null;
+            while (r!=null)
+            {
+                String[] rt = r.split(" ");
+                String resultId = rt[0];
+                String grade = rt[1];
+                student[i] = new Result1( resultId,grade);
+
+                if(resultID.equals(student[i].resultId)) {
+                    ab = "a";
+                    showResultTextArea.setText(student[i].resultId+"\t\t\t\t\t"+student[i].grade);
+                }
+                i++;
+                r = buf.readLine();
+            }
+            if(ab==null){
+                JOptionPane.showMessageDialog(null, "Invalid login, please try again.");
+            }
+
+
+
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    public void addResultClick() throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("fxml/ResultRecord.fxml"));
+        Stage window = (Stage) addResultButton.getScene().getWindow();
+        window.setScene(new Scene(root,600,575));
+    }
+    @FXML
+    public void attendanceBackClick() throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("fxml/Attendance.fxml"));
+        Stage window = (Stage) attendanceBack.getScene().getWindow();
+        window.setScene(new Scene(root,600,575));
+    }
+    @FXML
+    public void resultBackClick() throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("fxml/Result.fxml"));
+        Stage window = (Stage) resultBackButton.getScene().getWindow();
+        window.setScene(new Scene(root,600,575));
+    }
+    @FXML
+    public void attendanceDataSaveClick() {
+        String str = AttendenceID.getText()+" "+AttendencePresent.getText()+" "+AttendenceAbsent.getText();
+        AttendenceID.setText("");
+        AttendencePresent.setText("");
+        AttendenceAbsent.setText("");
+        File file = new File("Attendance.txt");
+        try {
+            FileWriter data = new FileWriter(file,true);
+            BufferedWriter bw = new BufferedWriter(data);
+            bw.write(str);
+            bw.newLine();
+            bw.close();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void saveResultClick() {
+        String str1 = idForResultTF.getText()+" "+gradeForResultTF.getText();
+        idForResultTF.setText("");
+        gradeForResultTF.setText("");
+
+        File file = new File("Result.txt");
+        try {
+            FileWriter data = new FileWriter(file,true);
+            BufferedWriter bw = new BufferedWriter(data);
+            bw.write(str1);
+            bw.newLine();
+            bw.close();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     @FXML
     public void studentSearchClick(){
 
@@ -235,6 +355,7 @@ public class Controller {
             e.printStackTrace();
         }
     }
+
     @FXML
     public void saveattendanceClick(){
         String attId = attendanceTextfield.getText();
@@ -271,9 +392,27 @@ public class Controller {
                 String CLASS = rt[4];
                 student[i] = new Data(firstName,lastName,id,contact,CLASS);
 
+
                 if(attId.equals(student[i].id)) {
                     ab = "a";
-                    studentSearchTextArea.setText(student[i].firstName+" "+student[i].lastName+" "+student[i].id+" "+student[i].contact+" "+student[i].CLASS);
+
+                    File file1 = new File("Data.txt");
+                    if (present.equals(true)) {
+//
+                        try {
+                            FileWriter data = new FileWriter(file1, true);
+                            BufferedWriter bw = new BufferedWriter(data);
+                            bw.write(student[i].id + " "+ student[i].CLASS);
+                            bw.newLine();
+                            bw.close();
+
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                    else {
+//                        student[i].absent++;
+                    }
                 }
                 i++;
                 r = buf.readLine();

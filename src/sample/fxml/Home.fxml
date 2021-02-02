@@ -15,7 +15,7 @@
    <children>
       <Pane layoutY="2.0" prefHeight="86.0" prefWidth="600.0" style="-fx-background-color: CCCCFF;">
          <children>
-            <Label layoutX="152.0" layoutY="22.0" prefHeight="43.0" prefWidth="336.0" text="PHP School Management" textFill="#025665">
+            <Label layoutX="55.0" layoutY="22.0" prefHeight="43.0" prefWidth="498.0" text="Online School Management System" textFill="#025665">
                <font>
                   <Font name="Book Antiqua" size="29.0" />
                </font>
@@ -55,7 +55,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="attendanceBtn" contentDisplay="TOP" mnemonicParsing="false" onAction="#attendanceClick" prefHeight="181.0" prefWidth="242.0" text="Attendance" GridPane.columnIndex="2">
+            <Button fx:id="attendanceButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#attendanceClick" prefHeight="181.0" prefWidth="242.0" text="Attendance" GridPane.columnIndex="2">
                <font>
                   <Font size="17.0" />
                </font>
@@ -67,7 +67,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnDashboard3" contentDisplay="TOP" mnemonicParsing="false" prefHeight="181.0" prefWidth="242.0" text="Classes" GridPane.rowIndex="1">
+            <Button fx:id="classRoutineButton" contentDisplay="TOP" mnemonicParsing="false" prefHeight="181.0" prefWidth="242.0" text="Classes" GridPane.rowIndex="1">
                <font>
                   <Font size="17.0" />
                </font>
